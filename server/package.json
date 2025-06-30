@@ -1,11 +1,23 @@
 {
   "name": "resume-analyzer-server",
   "version": "1.0.0",
+  "description": "Backend server for the AI-powered Resume Analyzer application",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
     "start": "node server.js"
   },
+  "keywords": [
+    "resume",
+    "ai",
+    "express",
+    "openai",
+    "vercel",
+    "backend",
+    "api"
+  ],
+  "author": "Moin Sheikh",
+  "license": "MIT",
   "dependencies": {
     "axios": "^1.6.0",
     "cors": "^2.8.5",
