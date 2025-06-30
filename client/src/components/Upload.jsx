@@ -6,8 +6,10 @@ import axios from "axios";
 import { marked } from "marked";
 import html2pdf from "html2pdf.js";
 import { useAppContext } from "../context/AppContext";
-import { useUser } from "@clerk/clerk-react"; // ✅ Add this line
+import { useUser } from "@clerk/clerk-react";
 
+// 🌐 Live backend URL
+const BACKEND_URL = "https://resume-backend-f3uo.onrender.com";
 
 const Upload = () => {
   const [file, setFile] = useState(null);
@@ -19,8 +21,6 @@ const Upload = () => {
   const [aiLoading, setAiLoading] = useState(false);
   const feedbackRef = useRef(null);
   const { isSignedIn, user } = useUser();
-
-
 
   const handleFileChange = (e) => {
     const uploadedFile = e.target.files[0];
@@ -48,10 +48,8 @@ const Upload = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post("http://localhost:5000/upload", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const res = await axios.post(`${BACKEND_URL}/upload`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
       });
       setExtractedText(res.data.text);
     } catch (error) {
@@ -63,41 +61,38 @@ const Upload = () => {
   };
 
   const analyzeWithGPT = async () => {
-  if (!user) {
-    alert("Please log in to analyze your resume.");
-    return;
-  }
+    if (!user) {
+      alert("Please log in to analyze your resume.");
+      return;
+    }
 
-  try {
-    setAiLoading(true);
-    const res = await axios.post("http://localhost:5000/analyze", {
-      resumeText: extractedText,
-      userId: user.id,
-    });
+    try {
+      setAiLoading(true);
+      const res = await axios.post(`${BACKEND_URL}/analyze`, {
+        resumeText: extractedText,
+        userId: user.id,
+      });
 
-    setFeedback(res.data.feedback || "No feedback generated.");
-    setRating(res.data.rating || "No rating found");
-    setSuggestionCount(res.data.suggestions?.length || 0);
-  } catch (error) {
-    console.error("❌ GPT analysis failed:", error);
-    alert("AI feedback generation failed.");
-  } finally {
-    setAiLoading(false);
-  }
-};
-
-
+      setFeedback(res.data.feedback || "No feedback generated.");
+      setRating(res.data.rating || "No rating found");
+      setSuggestionCount(res.data.suggestions?.length || 0);
+    } catch (error) {
+      console.error("❌ GPT analysis failed:", error);
+      alert("AI feedback generation failed.");
+    } finally {
+      setAiLoading(false);
+    }
+  };
 
   const handleDownload = () => {
     if (!feedback) return;
 
-    // Prepare plain HTML with no Tailwind or oklch colors
     const safeHTML = `
-    <div style="font-family: Arial, sans-serif; color: #000; padding: 20px; line-height: 1.6; font-size: 14px;">
-      ${marked(feedback)}
-      <p style="margin-top: 20px; font-weight: bold;">Feedback Rating: ${rating} | Suggestions: ${suggestionCount}</p>
-    </div>
-  `;
+      <div style="font-family: Arial, sans-serif; color: #000; padding: 20px; line-height: 1.6; font-size: 14px;">
+        ${marked(feedback)}
+        <p style="margin-top: 20px; font-weight: bold;">Feedback Rating: ${rating} | Suggestions: ${suggestionCount}</p>
+      </div>
+    `;
 
     const element = document.createElement("div");
     element.innerHTML = safeHTML;
@@ -120,7 +115,8 @@ const Upload = () => {
   };
 
   return (
-    <motion.section id="upload"
+    <motion.section
+      id="upload"
       className="max-w-3xl mx-auto mt-10 px-6 py-10 bg-white rounded-xl shadow-lg border border-gray-200"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
@@ -131,13 +127,11 @@ const Upload = () => {
       </h2>
 
       {!isSignedIn && (
-  <div className="mb-4 p-4 rounded-lg bg-yellow-100 border border-yellow-400 text-yellow-800 text-sm font-medium">
-    ⚠️ You must <span className="font-semibold">log in</span> to analyze your resume and get AI feedback.
-  </div>
-)}
+        <div className="mb-4 p-4 rounded-lg bg-yellow-100 border border-yellow-400 text-yellow-800 text-sm font-medium">
+          ⚠️ You must <span className="font-semibold">log in</span> to analyze your resume and get AI feedback.
+        </div>
+      )}
 
-
-      {/* File Upload */}
       <label
         htmlFor="resume-upload"
         className="border-2 border-dashed border-blue-400 bg-blue-50 hover:bg-blue-100 cursor-pointer rounded-xl p-6 text-center flex flex-col items-center gap-2 transition"
@@ -154,7 +148,6 @@ const Upload = () => {
         />
       </label>
 
-      {/* Upload Button */}
       <button
         onClick={handleUpload}
         disabled={!file || loading || !isSignedIn}
@@ -168,7 +161,6 @@ const Upload = () => {
         {loading ? "Analyzing..." : "Analyze Resume"}
       </button>
 
-      {/* AI Feedback Button */}
       {extractedText && !feedback && (
         <button
           onClick={analyzeWithGPT}
@@ -179,7 +171,6 @@ const Upload = () => {
         </button>
       )}
 
-      {/* Extracted Resume Text */}
       {extractedText && (
         <motion.div
           className="mt-6 bg-gray-50 p-4 rounded-md border border-gray-300 text-gray-700 whitespace-pre-wrap text-sm max-h-64 overflow-y-auto"
@@ -193,7 +184,6 @@ const Upload = () => {
         </motion.div>
       )}
 
-      {/* AI Suggestions and Feedback */}
       {feedback && (
         <>
           <div ref={feedbackRef} className="max-w-none mt-6">

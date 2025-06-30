@@ -22,8 +22,14 @@ mongoose.connect(process.env.MONGO_URI, {
 .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 // ✅ Middleware
-app.use(cors());
-app.use(fileUpload());
+app.use(cors({
+  origin: "*", // Or specify your frontend domain: "https://resume-analyzer-three-wine.vercel.app"
+  methods: ["GET", "POST"]
+}));
+app.use(fileUpload({
+  limits: { fileSize: 10 * 1024 * 1024 }, // 10MB
+}));
+
 app.use(express.json());
 
 // ✅ Register routes
