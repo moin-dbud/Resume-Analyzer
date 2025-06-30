@@ -70,6 +70,11 @@ app.get("/history/:userId", async (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("✅ Resume Analyzer API is running.");
+});
+
+
 // ✅ Start server
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
