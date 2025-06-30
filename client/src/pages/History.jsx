@@ -14,7 +14,7 @@ const History = () => {
       if (!isSignedIn) return;
 
       try {
-        const res = await axios.get(`http://localhost:5000/history/${user.id}`);
+        const res = await axios.get(`https://resume-backend-f3uo.onrender.com/history/${user.id}`);
         setHistory(res.data);
       } catch (error) {
         console.error("❌ Error fetching history:", error);
@@ -26,6 +26,9 @@ const History = () => {
 
     fetchHistory();
   }, [user, isSignedIn]);
+
+  console.log("Fetching history for userId:", user?.id);
+
 
   if (!isSignedIn) {
     return (
