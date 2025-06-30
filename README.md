@@ -1,5 +1,3 @@
-# 🧠 AI-Powered Resume Analyzer
-
 An intelligent, full-stack resume analyzer that lets users upload their resumes (PDF), extracts text, and provides **AI-generated feedback**, ratings, and suggestions. Built with modern tools like **React**, **Tailwind CSS**, **Clerk Auth**, **Gemini API**, **Node.js**, **MongoDB**, and more.
 
 > ✅ Perfect for job seekers to polish their resumes with real-time, actionable AI feedback!
@@ -22,7 +20,10 @@ An intelligent, full-stack resume analyzer that lets users upload their resumes 
 
 ## 📸 Demo
 
-![Demo GIF or Screenshot](https://your-demo-link-or-screenshot-url.com)
+![Screenshot 2025-06-30 153934](https://github.com/user-attachments/assets/ca95da03-fa1a-4963-b152-d602cfcd8e36)
+![Screenshot 2025-06-30 153947](https://github.com/user-attachments/assets/9d897389-26b6-4d9a-9136-71a93b09f15b)
+
+[Live Demo](https://resume-analyzer-three-wine.vercel.app/)
 
 ---
 
@@ -44,7 +45,6 @@ An intelligent, full-stack resume analyzer that lets users upload their resumes 
 
 ---
 
----
 
 ## 🚀 Getting Started
 
