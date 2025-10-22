@@ -19,7 +19,7 @@ const Navabr = () => {
             <a href="#upload" onClick={() => setIsOpen(false)} className="cursor-pointer hover:text-blue-600 transition" >Analyze Resume</a>
             <a href="#how-it-works" onClick={() => setIsOpen(false)} className="cursor-pointer hover:text-blue-600 transition" >How It Works</a>
             <a href="#contact" onClick={() => setIsOpen(false)} className="cursor-pointer hover:text-blue-600 transition" >Contact Us</a>
-            <Link to="/about"  className="hover:text-blue-600 transition">About US</Link>
+            <Link to="/about-us"  className="hover:text-blue-600 transition">About US</Link>
 
             </div>
 
